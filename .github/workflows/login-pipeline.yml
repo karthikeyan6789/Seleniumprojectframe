@@ -1,0 +1,50 @@
+name: Scheduled Login Test Pipeline
+
+on:
+  schedule:
+    # Runs every day at 9:00 AM IST (03:30 UTC)
+    - cron: '30 3 * * *'
+  
+  # Allow manual trigger from GitHub UI
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Java
+      - name: Set up Java 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      # Step 3: Run login feature tests with Maven
+      - name: Run Login Tests
+        run: mvn clean test -Dtest=CucumberTestRunner
+
+      # Step 4: Generate test report
+      - name: Generate HTML Report
+        if: always()
+        run: |
+          mkdir -p reports
+          cp -r target/cucumber-reports/* reports/ || true
+
+      # Step 5: Upload test results
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: reports/
+
+      # Step 6: Test Status
+      - name: Test Status
+        if: always()
+        run: echo "Login tests completed at $(date)"
