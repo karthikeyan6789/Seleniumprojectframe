@@ -31,6 +31,8 @@ jobs:
 
       - name: Build Project
         run: mvn clean compile
+        working-directory: eclipse-workspace/Seleniumpro
 
       - name: Run Tests
         run: mvn test
+        working-directory: eclipse-workspace/Seleniumpro
