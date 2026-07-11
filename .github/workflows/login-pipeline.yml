@@ -25,6 +25,12 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      # Step 2.5: Install Chrome and dependencies
+      - name: Install Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser chromium-chromedriver
+
       # Step 3: Run login feature tests with Maven
       - name: Run Login Tests
         run: mvn clean test -Dtest=CucumberTestRunner
