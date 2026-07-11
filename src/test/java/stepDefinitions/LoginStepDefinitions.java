@@ -7,6 +7,7 @@ import io.cucumber.java.en.Then;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.junit.Assert;
 
 public class LoginStepDefinitions {
@@ -17,7 +18,16 @@ public class LoginStepDefinitions {
     public void userIsOnLoginPage() {
         // Initialize the WebDriver using WebDriverManager
         WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+        
+        // Configure Chrome options for headless mode
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless=new");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--window-size=1920,1080");
+        
+        driver = new ChromeDriver(options);
         
         // Navigate to login page
         driver.navigate().to("https://letcode.in/");
