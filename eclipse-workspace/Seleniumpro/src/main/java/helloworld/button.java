@@ -13,7 +13,7 @@ System.setProperty("webdriver.chrome.driver", "C:\\Users\\LAPTOP\\eclipse-worksp
         
         driver.findElement(By.partialLinkText("Explore Workspace")).click();
 
-        driver.findElement(By.partialLinkText("Click")).click();
+        driver.findElement(By.partialLinkText("Cli")).click();
         
         driver.findElement(By.xpath("//button[@id='home']")).click();
         driver.navigate().to("https://letcode.in/button");
